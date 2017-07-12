@@ -1,0 +1,8 @@
+data_map:
+  table1:
+    col1: /x/path/data1
+    col2: /x/path/data2
+    col3: /x/path/data3
+  table2:
+    col1: /x/path/data1
+    col2: =table1.col2
