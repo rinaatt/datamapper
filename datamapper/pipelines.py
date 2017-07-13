@@ -3,6 +3,7 @@ from logging import ERROR
 from dateutil.parser import parse as parse_date
 from peewee import DatabaseError
 from scrapy import Spider
+from .spiders import RssFeedBaseSpider
 from .models import create_db_tables, RssNews
 
 
@@ -24,7 +25,7 @@ class SQLiteBasePipeline:
 class RssFeedPipeline(SQLiteBasePipeline):
 
     def process_item(self, item: dict, spider: Spider):
-        if spider.name == 'rss_feed':
+        if isinstance(spider, RssFeedBaseSpider):
             _item = item.copy()
             pub_date_tz = parse_date(_item['pub_date'])
             _item['pub_date'] = pub_date_tz.astimezone(tz=UTC)

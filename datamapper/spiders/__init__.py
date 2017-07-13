@@ -1,6 +1,7 @@
-from .rss import RssFeedSpider
+from .rss import YandexRssFeedSpider, RssFeedBaseSpider
 
 
 __all__ = [
     'RssFeedSpider',
+    'RssFeedBaseSpider',
 ]

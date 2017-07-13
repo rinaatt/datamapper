@@ -1,31 +1,18 @@
 import os
 import sqlite3
 import unittest
+from datamapper.spiders import RssFeedSpider
 import logging
 
 
 class TestRssFeed(unittest.TestCase):
-    db_place = ':memory:'
+    # db_place = ':memory:'
 
     def setUp(self):
         """
         Setup a temporary database
         """
-        conn = sqlite3.connect(self.db_place)
-        cursor = conn.cursor()
-        # create a table
-        cursor.execute(
-            "CREATE TABLE rss_news ("
-            " id PRIMARY KEY,"
-            " title TEXT,"
-            " link TEXT,"
-            " guid TEXT,"
-            " pub_date TEXT,"
-            " description TEXT"
-            ")"
-        )
-        # save to database
-        conn.commit()
+        self.spider = RssFeedSpider()
 
     def tearDown(self):
         """

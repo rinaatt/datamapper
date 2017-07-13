@@ -88,7 +88,7 @@ ROBOTSTXT_OBEY = True
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-COMMANDS_MODULE = 'datamapper.commands'
+# COMMANDS_MODULE = 'datamapper.commands'
 TYPE_SPIDERS_MAP = {
     'rss': 'datamapper.spiders.RssFeedSpider',
 }
