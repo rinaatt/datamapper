@@ -4,33 +4,40 @@ import json
 import unittest
 import pytz
 from dateutil.parser import parse
-from datamapper.settings import SQLITE_DB_PLACE
 from datamapper.pipelines import RssFeedPipeline
-from datamapper.models import RssNews, create_db_tables
+from datamapper.models import RssNews
 from datamapper.spiders import RssFeedBaseSpider
+
+TESTS_DIR = op.abspath(op.dirname(__file__))
+
+
+def get_database():
+    from datamapper.models import database, create_db_tables
+    database.init(':memory:')
+    create_db_tables(database)
+    return database
 
 
 class TestRssFeedPipeline(unittest.TestCase):
-    db_place = SQLITE_DB_PLACE
-    items_data_file = op.abspath(op.join(op.dirname(__file__),
-                                         'data', 'rssfeed_items.json'))
+    items_data_file = op.join(TESTS_DIR, 'data', 'rssfeed_items.json')
 
     def setUp(self):
         """
         Setup a temporary database
         """
-        self.database = create_db_tables()
+
+        self.db = get_database()
         self.spider = RssFeedBaseSpider()
         with open(self.items_data_file, 'rb') as f:
             self.items = json.load(f, encoding='utf-8')
 
     def tearDown(self):
-        self.database.close()
-        os.remove(self.db_place)
+        if not self.db.is_closed():
+            self.db.close()
 
     def test_process_one(self):
         item = self.items[0]
-        pipeline = RssFeedPipeline(database=self.database)
+        pipeline = RssFeedPipeline(db=self.db)
         pipeline.process_item(item, self.spider)
         count = RssNews.select().count()
         news_piece = RssNews.select().first()
@@ -44,7 +51,7 @@ class TestRssFeedPipeline(unittest.TestCase):
         self.assertEqual(news_piece.description, item['description'])
 
     def test_process_serial(self):
-        pipeline = RssFeedPipeline(database=self.database)
+        pipeline = RssFeedPipeline(db=self.db)
         for item in self.items:
             pipeline.process_item(item, self.spider)
         count = RssNews.select().count()

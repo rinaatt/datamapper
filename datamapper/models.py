@@ -1,13 +1,12 @@
 import peewee as orm
-from .settings import SQLITE_DB_PLACE
 
-DB = orm.SqliteDatabase(SQLITE_DB_PLACE)
+database = orm.SqliteDatabase(None)
 
 
 class BaseModel(orm.Model):
 
     class Meta:
-        database = DB
+        database = database
 
 
 class RssNews(BaseModel):
@@ -21,8 +20,7 @@ class RssNews(BaseModel):
         db_table = 'rss_news'
 
 
-def create_db_tables():
-    DB.connect()
-    DB.create_tables([RssNews, ], True)
-    DB.close()
-    return DB
+def create_db_tables(db):
+    db.connect()
+    db.create_tables([RssNews, ], True)
+    # db.close()

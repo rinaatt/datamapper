@@ -1,14 +1,8 @@
-# -*- coding: utf-8 -*-
-
+import os.path as op
 # Scrapy settings for datamapper project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-#     http://doc.scrapy.org/en/latest/topics/settings.html
-#     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
+
+BASE_DIR = op.abspath(op.join(op.dirname(__file__), '..'))
 BOT_NAME = 'datamapper'
 
 SPIDER_MODULES = ['datamapper.spiders']
@@ -90,4 +84,4 @@ ITEM_PIPELINES = {
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-SQLITE_DB_PLACE = 'datamapper.db'
+SQLITE_DB_PLACE = op.join(BASE_DIR, 'datamapper.db')

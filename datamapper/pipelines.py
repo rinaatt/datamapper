@@ -4,22 +4,32 @@ from dateutil.parser import parse as parse_date
 from peewee import DatabaseError
 from scrapy import Spider
 from .spiders import RssFeedBaseSpider
-from .models import create_db_tables, RssNews
+from .settings import SQLITE_DB_PLACE
+from .models import RssNews
+
+
+def get_database():
+    from .models import database, create_db_tables
+    database.init(SQLITE_DB_PLACE)
+    create_db_tables(database)
+    return database
 
 
 class SQLiteBasePipeline:
     conn = None
 
-    def __init__(self, database=None):
-        if database is None:
-            database = create_db_tables()
-        self.db = database
+    def __init__(self, db=None):
+        if db is None:
+            db = get_database()
+        self.db = db
 
     def open_spider(self, spider: Spider):
-        self.db.connect()
+        if self.db.is_closed():
+            self.db.connect()
 
     def close_spider(self, spider: Spider):
-        self.db.close()
+        if not self.db.is_closed():
+            self.db.close()
 
 
 class RssFeedPipeline(SQLiteBasePipeline):
