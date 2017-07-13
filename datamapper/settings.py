@@ -92,3 +92,4 @@ COMMANDS_MODULE = 'datamapper.commands'
 TYPE_SPIDERS_MAP = {
     'rss': 'datamapper.spiders.RssFeedSpider',
 }
+SQLITE_DB_PLACE = 'datamapper.db'

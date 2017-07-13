@@ -1,8 +1,8 @@
 from scrapy.spiders import XMLFeedSpider
-from .__mixins import ConfigureMixin
+# from .__mixins import ConfigureMixin
 
 
-class RssFeedSpider(XMLFeedSpider, ConfigureMixin):
+class RssFeedBaseSpider(XMLFeedSpider):
     name = 'rss_feed'
     iterator = 'xml'
     itertag = 'item'
@@ -14,6 +14,9 @@ class RssFeedSpider(XMLFeedSpider, ConfigureMixin):
         ('media', 'http://search.yahoo.com/mrss/'),
         ('feedburner', 'http://rssnamespace.org/feedburner/ext/1.0'),
     ]
+
+
+class RssFeedSpider(RssFeedBaseSpider):
 
     def parse_node(self, response, selector):
         return {}
