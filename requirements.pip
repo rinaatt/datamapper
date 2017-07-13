@@ -1,3 +1,5 @@
 Scrapy
 PyYAML
 peewee
+python-dateutil
+pytz

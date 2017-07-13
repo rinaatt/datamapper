@@ -1,17 +1,13 @@
 import peewee as orm
+from .settings import SQLITE_DB_PLACE
 
-
-def get_database(db_place=None):
-    if db_place is None:
-        from .settings import SQLITE_DB_PLACE
-        db_place = SQLITE_DB_PLACE
-    return orm.SqliteDatabase(db_place, threadlocals=True)
+DB = orm.SqliteDatabase(SQLITE_DB_PLACE)
 
 
 class BaseModel(orm.Model):
 
     class Meta:
-        database = get_database()
+        database = DB
 
 
 class RssNews(BaseModel):
@@ -21,8 +17,11 @@ class RssNews(BaseModel):
     pub_date = orm.DateTimeField()
     description = orm.TextField()
 
+    class Meta:
+        db_table = 'rss_news'
 
-def create_tables():
-    db = get_database()
-    db.connect()
-    db.create_tables([RssNews, ], True)
+
+def create_db_tables():
+    DB.connect()
+    DB.create_tables([RssNews, ], True)
+    return DB
