@@ -1,25 +1,26 @@
 import os
+import os.path as op
 import json
 import unittest
 import pytz
-from datetime import datetime
 from dateutil.parser import parse
 from datamapper.settings import SQLITE_DB_PLACE
 from datamapper.pipelines import RssFeedPipeline
 from datamapper.models import RssNews, create_db_tables
-from datamapper.spiders import RssFeedSpider
+from datamapper.spiders import RssFeedBaseSpider
 
 
 class TestRssFeedPipeline(unittest.TestCase):
     db_place = SQLITE_DB_PLACE
-    items_data_file = 'data/rssfeed_items.json'
+    items_data_file = op.abspath(op.join(op.dirname(__file__),
+                                         'data', 'rssfeed_items.json'))
 
     def setUp(self):
         """
         Setup a temporary database
         """
         self.database = create_db_tables()
-        self.spider = RssFeedSpider()
+        self.spider = RssFeedBaseSpider()
         with open(self.items_data_file, 'rb') as f:
             self.items = json.load(f, encoding='utf-8')
 

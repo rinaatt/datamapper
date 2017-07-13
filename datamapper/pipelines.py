@@ -16,10 +16,10 @@ class SQLiteBasePipeline:
         self.db = database
 
     def open_spider(self, spider: Spider):
-        self.conn = self.db.connect()
+        self.db.connect()
 
     def close_spider(self, spider: Spider):
-        self.conn.close()
+        self.db.close()
 
 
 class RssFeedPipeline(SQLiteBasePipeline):

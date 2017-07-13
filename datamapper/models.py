@@ -24,4 +24,5 @@ class RssNews(BaseModel):
 def create_db_tables():
     DB.connect()
     DB.create_tables([RssNews, ], True)
+    DB.close()
     return DB

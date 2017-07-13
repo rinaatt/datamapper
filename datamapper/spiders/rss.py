@@ -16,6 +16,9 @@ class RssFeedBaseSpider(XMLFeedSpider):
         ('media', 'http://search.yahoo.com/mrss/'),
         ('feedburner', 'http://rssnamespace.org/feedburner/ext/1.0'),
     ]
+    custom_settings = {
+        'ROBOTSTXT_OBEY': False
+    }
 
     def parse_node(self, response: TextResponse, selector: Selector):
         return {
@@ -31,3 +34,13 @@ class YandexRssFeedSpider(RssFeedBaseSpider):
     name = 'rss_feed_yandex'
     start_urls = ['https://news.yandex.ru/index.rss', ]
 
+    def parse(self, response: TextResponse):
+        """
+        This function parses a sample response. Some contracts are mingled
+        with this docstring.
+        @url https://news.yandex.ru/index.rss
+        @returns items 15 15
+        @returns requests 0 0
+        @scrapes title link guid pub_date description
+        """
+        return super().parse(response)
