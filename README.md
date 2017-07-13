@@ -10,6 +10,6 @@ For check spider:
 
     scrapy check rss_feed_yandex
     
-For check pipeline:
+Run tests:
 
-    python -m unittest datamapper/tests/pipeline.py
+    python -m unittest datamapper.tests

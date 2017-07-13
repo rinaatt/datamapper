@@ -1,5 +1,7 @@
-from .pipeline import RssFeedPipeline
+from .pipeline import TestRssFeedPipeline
+from .rss import TestYandexRssFeedSpider
 
 __all__ = [
-    'RssFeedPipeline',
+    'TestRssFeedPipeline',
+    'TestYandexRssFeedSpider',
 ]
