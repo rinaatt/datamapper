@@ -3,6 +3,7 @@ from .__mixins import ConfigureMixin
 
 
 class RssFeedSpider(XMLFeedSpider, ConfigureMixin):
+    name = 'rss_feed'
     iterator = 'xml'
     itertag = 'item'
     namespaces = [
@@ -15,4 +16,4 @@ class RssFeedSpider(XMLFeedSpider, ConfigureMixin):
     ]
 
     def parse_node(self, response, selector):
-        pass
+        return {}
