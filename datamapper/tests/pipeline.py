@@ -19,6 +19,9 @@ def get_database():
 
 
 class TestRssFeedPipeline(unittest.TestCase):
+    """
+    Test saving items to database
+    """
     items_data_file = op.join(TESTS_DIR, 'data', 'rssfeed_items.json')
 
     def setUp(self):

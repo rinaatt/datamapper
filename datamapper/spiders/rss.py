@@ -4,6 +4,9 @@ from parsel.selector import Selector
 
 
 class RssFeedBaseSpider(XMLFeedSpider):
+    """
+    Base Spider for RSS Feed
+    """
     name = 'rss_feed'
     iterator = 'xml'
     itertag = 'item'

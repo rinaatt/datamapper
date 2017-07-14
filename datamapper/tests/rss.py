@@ -10,6 +10,9 @@ TESTS_DIR = op.abspath(op.dirname(__file__))
 
 
 class TestYandexRssFeedSpider(unittest.TestCase):
+    """
+    Test parsing of spider
+    """
     rss_file = op.join(TESTS_DIR, 'data', 'yandex_news.rss')
 
     def setUp(self):
